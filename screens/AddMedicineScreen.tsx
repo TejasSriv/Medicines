@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { addMedicine, getMedicines } from '../services/StorageService';
 
 const AddMedicineScreen = () => {
   const [medicineName, setMedicineName] = useState('');
 
-  const handleAddMedicine = () => {
+  const handleAddMedicine = async () => {
     if (medicineName.trim()) {
-      // Logic to save the medicine or proceed to next step
+      await addMedicine(medicineName);
       Alert.alert('Medicine Added', `Medicine Name: ${medicineName}`);
+      console.log(medicineName);
       setMedicineName(''); // Clear the input after adding
     } else {
       Alert.alert('Error', 'Please enter a valid medicine name');
