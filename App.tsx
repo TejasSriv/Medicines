@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import MedicineListScreen from './src/screens/MedicineListScreen';
-import AddMedicineScreen from './src/screens/AddMedicineScreen';
+import MedicineListScreen from './screens/MedicineListScreen';
+import AddMedicineScreen from './screens/AddMedicineScreen';
 
 const Stack = createStackNavigator();
 
