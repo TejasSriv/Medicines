@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import { RNCamera } from 'react-native-camera';
 
 const AddMedicineScreen = () => {
   const [medicineName, setMedicineName] = useState('');
-  const [isScanning, setIsScanning] = useState(false);
 
-  const handleBarcodeScanned = ({ data }: { data: string }) => {
-    setIsScanning(false);
-    // Process the barcode data, maybe fetch data from a database
-    Alert.alert('Barcode Scanned', `Barcode data: ${data}`);
-    // You could auto-fill the medicineName or other fields based on the barcode
+  const handleAddMedicine = () => {
+    if (medicineName.trim()) {
+      // Logic to save the medicine or proceed to next step
+      Alert.alert('Medicine Added', `Medicine Name: ${medicineName}`);
+      setMedicineName(''); // Clear the input after adding
+    } else {
+      Alert.alert('Error', 'Please enter a valid medicine name');
+    }
   };
 
   return (
@@ -22,17 +23,7 @@ const AddMedicineScreen = () => {
         value={medicineName}
         onChangeText={setMedicineName}
       />
-
-      <Button title="Scan Barcode" onPress={() => setIsScanning(true)} />
-
-      {isScanning && (
-        <RNCamera
-          style={styles.camera}
-          type={RNCamera.Constants.Type.back}
-          onBarCodeRead={handleBarcodeScanned}
-          captureAudio={false}
-        />
-      )}
+      <Button title="Add Medicine" onPress={handleAddMedicine} />
     </View>
   );
 };
@@ -52,11 +43,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 15,
     borderRadius: 5,
-  },
-  camera: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
   },
 });
 
