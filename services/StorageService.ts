@@ -24,6 +24,19 @@ export const getMedicines = async (): Promise<string[]> => {
     }
 };
 
+//fucntion to retireve a single medicine by its name
+export const getMedicineByName = async (medicineName: string): Promise<string | null> => {
+    try {
+      const storedMedicines = await AsyncStorage.getItem(MEDICINE_KEY);
+      const medicines = storedMedicines ? JSON.parse(storedMedicines) : [];
+      const medicine = medicines.find((name: string) => name.toLowerCase() === medicineName.toLowerCase());
+      return medicine || null;
+    } catch (error) {
+      console.error('Error retrieving single medicine:', error);
+      return null;
+    }
+};
+
 //function to clear all medicines
 export const clearMedicines = async () => {
     try {
