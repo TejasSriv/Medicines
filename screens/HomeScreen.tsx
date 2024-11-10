@@ -1,29 +1,25 @@
 import React from 'react';
 import { View, Button, StyleSheet, Text } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
+import { HomeScreenNavigationProp } from '../types';
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 type Props = {
     navigation: HomeScreenNavigationProp;
 };
 
-const HomeScreen = ({ navigation }: Props) => {
+function HomeScreen({ navigation }: Props): React.JSX.Element {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Medicine Reminder App</Text>
             <Button
                 title="Add Medicine"
-                onPress={() => navigation.navigate('AddMedicine')}
-            />
+                onPress={() => navigation.navigate('AddMedicine')} />
             <Button
                 title="View Medicine List"
-                onPress={() => navigation.navigate('MedicineList')}
-            />
+                onPress={() => navigation.navigate('MedicineList')} />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
