@@ -6,33 +6,37 @@ import { RootStackParamList } from '../types';
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+    navigation: HomeScreenNavigationProp;
 };
 
 const HomeScreen = ({ navigation }: Props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Medicine Reminder App</Text>
-      <Button
-        title="Add Medicine"
-        onPress={() => navigation.navigate('AddMedicine')}
-      />
-    </View>
-  );
+    return (
+        <View style={styles.container}>
+            <Text style={styles.title}>Medicine Reminder App</Text>
+            <Button
+                title="Add Medicine"
+                onPress={() => navigation.navigate('AddMedicine')}
+            />
+            <Button
+                title="View Medicine List"
+                onPress={() => navigation.navigate('MedicineList')}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
 });
 
 export default HomeScreen;
