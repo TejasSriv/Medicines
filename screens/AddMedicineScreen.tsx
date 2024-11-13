@@ -1,27 +1,21 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
-import { addMedicine, getMedicineByName } from '../services/StorageService';
+import { useNavigation } from '@react-navigation/native';
+import { AddMedicineScreenNavigationProp } from '../types';
 
-const AddMedicineScreen = () => {
+
+function AddMedicineScreen(): React.JSX.Element {
+    const navigation = useNavigation<AddMedicineScreenNavigationProp>();
+
     const [medicineName, setMedicineName] = useState('');
 
-    const handleAddMedicine = async () => {
+    async function handleProceedToDetails(): Promise<void> {
         if (medicineName.trim()) {
-            await addMedicine(medicineName);
-            Alert.alert('Medicine Added', `Medicine Name: ${medicineName}`);
-            console.log(medicineName);
-            setMedicineName(''); // Clear the input after adding
-            const existingMedicine = await getMedicineByName(medicineName);
-            if(existingMedicine){
-                console.log("Medicine added to database");
-            }
-            else{
-                console.log("Could not add medicine to database");
-            }
+            navigation.navigate('MedicationDetails', { medicineName });
         } else {
             Alert.alert('Error', 'Please enter a valid medicine name');
         }
-    };
+    }
 
     return (
         <View style={styles.container}>
@@ -30,12 +24,11 @@ const AddMedicineScreen = () => {
                 style={styles.input}
                 placeholder="Medicine Name"
                 value={medicineName}
-                onChangeText={setMedicineName}
-            />
-            <Button title="Add Medicine" onPress={handleAddMedicine} />
+                onChangeText={setMedicineName} />
+            <Button title="Proceed to Details" onPress={handleProceedToDetails} />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
