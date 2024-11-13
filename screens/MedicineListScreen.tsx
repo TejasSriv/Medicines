@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Button, Alert } from 'react-native';
-import getMedicines, { clearMedicines } from '../services/StorageService';
+import StorageService from '../services/StorageService';
+import { Medicine } from '../types';
 
 function MedicineListScreen(): React.JSX.Element {
-    const [medicines, setMedicines] = useState<string[]>([]);
+    const [medicines, setMedicines] = useState<Medicine[]>([]);
 
     //fetch the medicines when the component mounts
     useEffect(() => {
-        const fetchMedicines = async () => {
-            const savedMedicines = await getMedicines();
+        async function fetchMedicines(): Promise<void> {
+            const savedMedicines = await StorageService.getMedicines();
             setMedicines(savedMedicines);
-        };
+        }
         fetchMedicines();
     }, []);
 
     async function handleClearMedicines(): Promise<void> {
-        await clearMedicines();
+        await StorageService.clearMedicines();
         setMedicines([]);
         Alert.alert('Success', 'All medicines have been cleared.');
     }
 
     // Render a single medicine item
-    function renderMedicineItem({ item }: { item: string; }): React.JSX.Element {
+    function renderMedicineItem({ item }: { item: Medicine; }): React.JSX.Element {
         return (
             <View style={styles.medicineItem}>
-                <Text style={styles.medicineText}>{item}</Text>
+                <Text style={styles.medicineText}>{item.name}</Text>
+                <Text>Dosage: {item.dosage}</Text>
             </View>
         );
     }
@@ -36,7 +38,7 @@ function MedicineListScreen(): React.JSX.Element {
             <FlatList
                 data={medicines}
                 renderItem={renderMedicineItem}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item) => item.id}
                 ListEmptyComponent={<Text>No medicines added yet.</Text>} />
 
             <Button title="Clear All Medicines" onPress={handleClearMedicines} />
