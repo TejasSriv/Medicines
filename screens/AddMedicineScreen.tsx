@@ -1,13 +1,42 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, Alert, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AddMedicineScreenNavigationProp } from '../types';
-
+import { getDisplayNames } from '../UMLSService';
+import { UMLS_API_KEY } from '@env';
 
 function AddMedicineScreen(): React.JSX.Element {
     const navigation = useNavigation<AddMedicineScreenNavigationProp>();
 
     const [medicineName, setMedicineName] = useState('');
+    const [suggestions, setSuggestions] = useState<string[]>([]);
+
+    const fetchSuggestions = async (query: string) => {
+        try {
+            // const tgt = await authenticate();
+            // const serviceTicket = await getServiceTicket(tgt);
+            const displayNames = await getDisplayNames(UMLS_API_KEY);
+
+            console.log(displayNames);
+
+            // Filter based on input query
+            const filteredSuggestions = displayNames.filter((name: string) =>
+                name.toLowerCase().startsWith(query.toLowerCase())
+            );
+            setSuggestions(filteredSuggestions);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleChange = (text: string) => {
+        setMedicineName(text);
+        if (text.length > 1) {
+            fetchSuggestions(text); // Fetch suggestions if input length > 1
+        } else {
+            setSuggestions([]); // Clear suggestions if input is too short
+        }
+    };
 
     async function handleProceedToDetails(): Promise<void> {
         if (medicineName.trim()) {
@@ -24,7 +53,12 @@ function AddMedicineScreen(): React.JSX.Element {
                 style={styles.input}
                 placeholder="Medicine Name"
                 value={medicineName}
-                onChangeText={setMedicineName} />
+                onChangeText={handleChange} />
+            <FlatList
+                data={suggestions}
+                keyExtractor={(item) => item}
+                renderItem={({ item }) => <Text>{item}</Text>}
+            />
             <Button title="Proceed to Details" onPress={handleProceedToDetails} />
         </View>
     );
