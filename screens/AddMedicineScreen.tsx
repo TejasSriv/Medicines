@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AddMedicineScreenNavigationProp } from '../types';
-import { getDisplayNames } from '../UMLSService';
+import { getDisplayNames } from '../services/UMLSService';
 import { UMLS_API_KEY } from '@env';
 
 function AddMedicineScreen(): React.JSX.Element {
