@@ -1,79 +1,101 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
+# Medicine Reminder App
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+A mobile application built with React Native for tracking and managing medication schedules. The app allows users to:
 
-## Step 1: Start the Metro Server
+- Add medicines manually by entering their names.
+- Add additional details about the medicine, such as dosage and form.
+- View a list of added medicines with their details.
+- Store and manage the medicine data locally on the device.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Features
 
-To start Metro, run the following command from the _root_ of your React Native project:
+1. **Add Medicine:**
+   - Users can add medicines by entering their name via a text input.
+   - The app allows the user to enter additional details like dosage and form (e.g., tablet, syrup).
+   - Data is stored locally in the device storage for future reference.
 
-```bash
-# using npm
-npm start
+2. **Medicine Details:**
+   - After adding a medicine, users can specify further details like:
+     - Dosage (e.g., Once a day, Twice a day).
+     - Form (e.g., Tablet, Syrup, Injection) – populated dynamically using RxNorm API.
+   
+3. **Medicine List:**
+   - Displays all the medicines entered, along with their details.
+   - Medicines are stored persistently across app restarts.
 
-# OR using Yarn
-yarn start
-```
+4. **Local Storage:**
+   - Medicine data is stored on the device using an on-device storage service.
 
-## Step 2: Start your Application
+5. **Autocompletion:**
+   - An API call to the OpenFDA is used to suggest medicine names as the user types.
+   - API caching is used to avoid repeated calls for the same data.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+6. **Future Features:**
+   - The barcode scanning feature is planned for future iterations.
+   - Integration with other medicine APIs (e.g., RxNorm) for extended functionality.
 
-### For Android
+## Prerequisites
 
-```bash
-# using npm
-npm run android
+To run this app locally, ensure you have the following installed:
 
-# OR using Yarn
-yarn android
-```
+- [Node.js](https://nodejs.org/) (version 14 or higher)
+- [React Native CLI](https://reactnative.dev/docs/environment-setup)
+- [Yarn](https://yarnpkg.com/) (alternative to npm)
 
-### For iOS
+## Installation
 
-```bash
-# using npm
-npm run ios
+1. Clone the repository:
 
-# OR using Yarn
-yarn ios
-```
+   ```bash
+   git clone https://github.com/your-repository/medicine-reminder-app.git
+   ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+2. Install dependencies:
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+   ```bash
+   yarn install
+   ```
 
-## Step 3: Modifying your App
+3. For iOS (if on macOS):
+   
+   ```bash
+   npx pod-install
+   ```
 
-Now that you have successfully run the app, let's modify it.
+4. Run the app on an Android emulator or physical device:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+   ```bash
+   npx react-native run-android
+   ```
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+## API Integration
 
-## Congratulations! :tada:
+The app uses the following APIs:
 
-You've successfully run and modified your React Native App. :partying_face:
+- **OpenFDA API**: Used to fetch and autocomplete medicine names.
+- **RxNorm API**: Fetches detailed information about medicines, such as their dosage forms.
 
-### Now what?
+### API Key
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+To use the RxNorm API, you’ll need an API key. Follow the instructions on the [UMLS website](https://uts.nlm.nih.gov/) to obtain a key.
 
-# Troubleshooting
+## File Structure
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- **AddMedicineScreen.tsx**: Screen to add a new medicine.
+- **MedicationDetailsScreen.tsx**: Screen to add further details like dosage and form.
+- **MedicineListScreen.tsx**: Displays a list of medicines.
+- **StorageService.ts**: Manages local storage for medicines.
+- **types.ts**: Type definitions for the app.
 
-# Learn More
+## Contributing
 
-To learn more about React Native, take a look at the following resources:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-name`).
+3. Make changes and commit (`git commit -am 'Add new feature'`).
+4. Push to the branch (`git push origin feature-name`).
+5. Create a new Pull Request.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## License
+
+This project is licensed under the MIT License.
